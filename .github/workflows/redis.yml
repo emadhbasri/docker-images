@@ -1,0 +1,15 @@
+name: Download Redis
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Save Redis
+        run: |
+          docker pull --platform linux/arm64 redis:alpine
+          docker save redis:alpine > redis_arm64.tar
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: redis-image
+          path: redis_arm64.tar
