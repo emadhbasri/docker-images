@@ -1,0 +1,15 @@
+name: Download MySQL
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Save MySQL
+        run: |
+          docker pull --platform linux/arm64 mysql:latest
+          docker save mysql:latest > mysql_arm64.tar
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: mysql-image
+          path: mysql_arm64.tar
