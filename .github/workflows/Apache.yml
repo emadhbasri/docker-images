@@ -1,0 +1,15 @@
+name: Download Apache
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Save Apache
+        run: |
+          docker pull --platform linux/arm64 httpd:alpine
+          docker save httpd:alpine > apache_arm64.tar
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: apache-image
+          path: apache_arm64.tar
