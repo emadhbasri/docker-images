@@ -1,0 +1,15 @@
+name: Download pgAdmin
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Save pgAdmin
+        run: |
+          docker pull --platform linux/arm64 dpage/pgadmin4:latest
+          docker save dpage/pgadmin4:latest > pgadmin_arm64.tar
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: pgadmin-image
+          path: pgadmin_arm64.tar
