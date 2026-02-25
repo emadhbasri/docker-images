@@ -1,0 +1,15 @@
+name: Download Mongo Express
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Save Mongo Express
+        run: |
+          docker pull --platform linux/arm64 mongo-express:latest
+          docker save mongo-express:latest > mongo_express_arm64.tar
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: mongo-express-image
+          path: mongo_express_arm64.tar
